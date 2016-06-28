@@ -174,7 +174,6 @@ export class KeyVerify {
   // Initiator is the side of the connection that sends Hello1.  That
   // same side sends Commit.
   private isInitiator_:boolean;
-  private ourKey_:freedom.PgpProvider.PublicKey;
   private ourHashes_:Hashes;
   private resolvePromise_ : () => void;
   private rejectPromise_ : () => void;
@@ -220,7 +219,8 @@ export class KeyVerify {
               private delegate_: Delegate,
               messages?: {[type:string]:Messages.Tagged},
               isInitiator?: boolean,
-              ourHashes?: Hashes) {
+              ourHashes?: Hashes,
+              private ourKey_ ?:freedom.PgpProvider.PublicKey) {
     KeyVerify.initStaticTables_();
     this.initDynamicTables_();
     this.completed_ = false;
@@ -243,6 +243,20 @@ export class KeyVerify {
       }
     }
     this.queuedGenerations_ = {};
+  }
+
+  // State Query -- only guaranteed to be valid after a successful key
+  // verification session.
+  public getHistory() :{[type:string]:Messages.Tagged} {
+    return this.messages_;
+  }
+
+  public getHashes() :Hashes {
+    return this.ourHashes_;
+  }
+
+  public getKey() :freedom.PgpProvider.PublicKey {
+    return this.ourKey_;
   }
 
   // Create a Messages.Tagged from an arbitrary message.  Designed for
@@ -521,14 +535,19 @@ export class KeyVerify {
 
   private loadKeys_() :Promise<void> {
     this.pgp_ = <freedom.PgpProvider.PgpProvider>globals.pgp;
-    log.debug('loadKeys(): starting.');
-    // our public key is globals.publicKey, but we need the fingerprint, so
-    // import the one in globals here, and get the higher-level object here.
-    return this.pgp_.exportKey().then((key:freedom.PgpProvider.PublicKey) => {
-      log.debug('loadKeys: got key ', key);
-      this.ourKey_ = key;
-      return;
-    });
+    if (!this.ourKey_) {
+      log.debug('loadKeys(): starting.');
+      // our public key is globals.publicKey, but we need the fingerprint, so
+      // import the one in globals here, and get the higher-level object here.
+      return this.pgp_.exportKey().then((key:freedom.PgpProvider.PublicKey) => {
+        log.debug('loadKeys: got key ', key);
+        this.ourKey_ = key;
+        return;
+      });
+    } else {
+      // Key may have been pre-filled by c'tor.
+      return Promise.resolve<void>();
+    }
   }
 
   // Logic for determining the next
@@ -704,11 +723,11 @@ export class KeyVerify {
       log.error('set_: bad type: ', message.type);
     }
     if (this.messages_[message.type]) {
-      log.error('set_: already have a message of ', message.type, ' (' +
+      log.warn('set_: already have a message of ', message.type, ' (' +
                   Type[message.type] + ')');
       this.resolve_(false);
     } else {
-      log.error('set_: setting message of ', message.type, ' (' +
+      log.info('set_: setting message of ', message.type, ' (' +
                   Type[message.type] + ')');
       this.messages_[message.type] = message;
     }
