@@ -1,14 +1,13 @@
-<link rel='import' href='../../bower/core-overlay/core-overlay.html'>
-<link rel='import' href='../../bower/core-signals/core-signals.html'>
-<link rel='import' href='../../bower/paper-progress/paper-progress.html'>
-<link rel='import' href='../../bower/paper-radio-button/paper-radio-button.html'>
-<link rel='import' href='../../bower/paper-radio-group/paper-radio-group.html'>
-<link rel='import' href='../../bower/polymer/polymer.html'>
-<link rel='import' href='button.html'>
+<link rel="import" href="../../bower/iron-overlay-behavior/iron-overlay-behavior.html">
+<link rel="import" href="../../bower/iron-signals/iron-signals.html">
+<link rel="import" href="../../bower/paper-progress/paper-progress.html">
+<link rel="import" href="../../bower/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower/polymer/polymer.html">
+<link rel="import" href="button.html">
 
-<polymer-element name='uproxy-cloud-install'>
-  <template>
-    <style>
+<dom-module id="uproxy-cloud-install">
+  <style>
     :host {
       text-align: start;
     }
@@ -76,152 +75,153 @@
       font-weight: bold;
     }
     </style>
+  <template>
 
-    <core-signals on-core-signal-open-cloud-install='{{ open }}'></core-signals>
+    <iron-signals on-core-signal-open-cloud-install=" open "></iron-signals>
 
-    <core-overlay id='getStartedOverlay'>
-      <uproxy-app-bar on-go-back='{{ back }}' color='#34AFCE'>
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="getStartedOverlay">
+      <uproxy-app-bar on-go-back=" back " color="#34AFCE">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/uproxy+digitalocean.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/uproxy+digitalocean.svg">
         </div>
-        <h1>{{ 'CLOUD_INSTALL_GET_STARTED_TITLE' | $$ }}</h1>
-        <p id='getStartedMessage'></p>
-        <paper-checkbox id='havePromoCode' label="{{ 'HAVE_PROMO_CODE' | $$ }}" on-change="{{havePromoChanged}}"></paper-checkbox>
-        <uproxy-button raised on-tap='{{ launchDigitalOceanSignup }}'>
-          {{ 'CREATE_A_NEW_ACCOUNT' | $$ }}
+        <h1>{{_computeExpression2()}}</h1>
+        <p id="getStartedMessage"></p>
+        <paper-checkbox id="havePromoCode" label="{{_computeLabel()}}" on-change="havePromoChanged"></paper-checkbox>
+        <uproxy-button raised="" on-tap=" launchDigitalOceanSignup ">
+          <span>{{_computeExpression3()}}</span>
         </uproxy-button>
-        <uproxy-button raised on-tap='{{ showLoginOverlay }}'>
-          {{ 'I_HAVE_AN_ACCOUNT' | $$ }}
+        <uproxy-button raised="" on-tap=" showLoginOverlay ">
+          <span>{{_computeExpression4()}}</span>
         </uproxy-button>
         <hr>
-        <h1>{{ 'CLOUD_INSTALL_EXISTING_SERVER_TITLE' | $$ }}</h1>
-        <p id='existingServerMessage'></p>
+        <h1>{{_computeExpression5()}}</h1>
+        <p id="existingServerMessage"></p>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
-    <core-overlay id='loginOverlay'>
-      <uproxy-app-bar on-go-back='{{ back }}' color='#34AFCE'>
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="loginOverlay">
+      <uproxy-app-bar on-go-back=" back " color="#34AFCE">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/location-circle.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/location-circle.svg">
         </div>
-        <h1>{{ 'CLOUD_INSTALL_LOGIN_TITLE' | $$ }}</h1>
+        <h1>{{_computeExpression7()}}</h1>
         <div>
-          <paper-radio-group id='regionMenu' selected='sgp1'>
+          <paper-radio-group id="regionMenu" selected="sgp1">
             <!-- TODO: get available regions from DigitalOcean -->
-            <paper-radio-button name='sgp1' label='{{ "ASIA_SINGAPORE" | $$ }}'></paper-radio-button>
-            <paper-radio-button name='blr1' label='{{ "ASIA_BANGALORE" | $$ }}'></paper-radio-button>
-            <paper-radio-button name='ams2' label='{{ "EUROPE_AMSTERDAM" | $$ }}'></paper-radio-button>
-            <paper-radio-button name='nyc2' label='{{ "NORTH_AMERICA_NEW_YORK" | $$ }}'></paper-radio-button>
+            <paper-radio-button name="sgp1" label="{{_computeLabel2()}}"></paper-radio-button>
+            <paper-radio-button name="blr1" label="{{_computeLabel3()}}"></paper-radio-button>
+            <paper-radio-button name="ams2" label="{{_computeLabel4()}}"></paper-radio-button>
+            <paper-radio-button name="nyc2" label="{{_computeLabel5()}}"></paper-radio-button>
           </paper-radio-group>
         </div>
-        <p id='loginMessage'></p>
+        <p id="loginMessage"></p>
         <!-- TODO: add learn more links -->
-        <uproxy-button raised on-tap='{{ loginTapped }}'>
-          {{ 'SIGN_IN_AND_CONNECT' | $$ }}
+        <uproxy-button raised="" on-tap=" loginTapped ">
+          <span>{{_computeExpression8()}}</span>
         </uproxy-button>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
-    <core-overlay id='installingOverlay'>
-      <uproxy-app-bar color='#34AFCE' disableback="true">
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="installingOverlay">
+      <uproxy-app-bar color="#34AFCE" disableback="true">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/loading-circle.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/loading-circle.svg">
         </div>
-        <h1>{{ 'CLOUD_INSTALL_INSTALLING_TITLE' | $$ }}</h1>
-        <p class="warning">{{ 'CLOUD_INSTALL_INSTALLING_WARNING' | $$ }}</p>
-        <p>{{ 'CLOUD_INSTALL_INSTALLING_MESSAGE' | $$ }}</p>
+        <h1>{{_computeExpression10()}}</h1>
+        <p class="warning">{{_computeExpression11()}}</p>
+        <p>{{_computeExpression12()}}</p>
         <div>
-          <paper-progress id='installProgress' value='{{ ui.cloudInstallProgress }}'></paper-progress>
+          <paper-progress id="installProgress" value="{{ ui.cloudInstallProgress }}"></paper-progress>
         </div>
         <p>{{ ui.cloudInstallStatus }}</p>
-        <uproxy-button on-tap='{{ cancelCloudInstall }}'>{{ 'CANCEL' | $$ }}</uproxy-button>
+        <uproxy-button on-tap=" cancelCloudInstall ">{{_computeExpression28()}}</uproxy-button>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
-    <core-overlay id='successOverlay'>
-      <uproxy-app-bar on-go-back='{{ back }}' color='#34AFCE'>
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="successOverlay">
+      <uproxy-app-bar on-go-back=" back " color="#34AFCE">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/ready-circle.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/ready-circle.svg">
         </div>
-          <h1>{{ 'CLOUD_INSTALL_SUCCESS_TITLE' | $$ }}</h1>
+          <h1>{{_computeExpression16()}}</h1>
         <!-- TODO: show IP address -->
-        <p>{{ 'CLOUD_INSTALL_SUCCESS_MESSAGE' | $$ }}</p>
+        <p>{{_computeExpression17()}}</p>
         <!-- TODO: add start getting access button -->
-        <uproxy-button on-tap='{{ closeOverlays }}'>{{ 'CONTINUE' | $$ }}</uproxy-button>
+        <uproxy-button on-tap=" closeOverlays ">{{_computeExpression18()}}</uproxy-button>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
-    <core-overlay id='failureOverlay'>
-      <uproxy-app-bar on-go-back='{{ back }}' color='#34AFCE'>
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="failureOverlay">
+      <uproxy-app-bar on-go-back=" back " color="#34AFCE">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/error-circle-ic.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/error-circle-ic.svg">
         </div>
-        <h1>{{ 'CLOUD_INSTALL_ERROR_TITLE' | $$ }}</h1>
-        <p>{{ 'DIGITAL_OCEAN_ERROR_MESSAGE' | $$ }}</p>
-        <uproxy-button raised on-tap='{{ loginTapped }}'>
-          {{ 'TRY_AGAIN' | $$ }}
+        <h1>{{_computeExpression20()}}</h1>
+        <p>{{_computeExpression21()}}</p>
+        <uproxy-button raised="" on-tap=" loginTapped ">
+          <span>{{_computeExpression22()}}</span>
         </uproxy-button>
-        <uproxy-button raised on-tap='{{ launchDigitalOceanSettings }}'>
-          {{ 'LAUNCH_DIGITAL_OCEAN_SETTINGS' | $$ }}
+        <uproxy-button raised="" on-tap=" launchDigitalOceanSettings ">
+          <span>{{_computeExpression23()}}</span>
         </uproxy-button>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
-    <core-overlay id='serverExistsOverlay'>
-      <uproxy-app-bar on-go-back='{{ back }}' color='#34AFCE'>
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="serverExistsOverlay">
+      <uproxy-app-bar on-go-back=" back " color="#34AFCE">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/error-circle-ic.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/error-circle-ic.svg">
         </div>
-        <h1>{{ 'CLOUD_INSTALL_ERROR_EXISTING_SERVER_TITLE' | $$ }}</h1>
-        <p>{{ 'CLOUD_INSTALL_ERROR_EXISTING_SERVER_MESSAGE' | $$ }}</p>
-        <uproxy-button raised on-tap='{{ removeServerAndInstallAgain }}'>
-          {{ 'REMOVE_SERVER_AND_TRY_AGAIN' | $$ }}
+        <h1>{{_computeExpression25()}}</h1>
+        <p>{{_computeExpression26()}}</p>
+        <uproxy-button raised="" on-tap=" removeServerAndInstallAgain ">
+          <span>{{_computeExpression27()}}</span>
         </uproxy-button>
-        <uproxy-button raised on-tap='{{ closeOverlays }}'>
-          {{ 'CANCEL' | $$ }}
+        <uproxy-button raised="" on-tap=" closeOverlays ">
+          <span>{{_computeExpression28()}}</span>
         </uproxy-button>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
 
-    <core-overlay id='cancelingOverlay'>
-      <uproxy-app-bar color='#34AFCE' disableback="true">
-        {{ 'CREATE_A_CLOUD_SERVER' | $$ }}
+    <iron-overlay-behavior id="cancelingOverlay">
+      <uproxy-app-bar color="#34AFCE" disableback="true">
+        <span>{{_computeExpression29()}}</span>
       </uproxy-app-bar>
 
-      <div class='content'>
-        <div class='imgWrapper'>
-          <img src='../../icons/cloud/error-circle-ic.svg'>
+      <div class="content">
+        <div class="imgWrapper">
+          <img src="../../icons/cloud/error-circle-ic.svg">
         </div>
-        <h1>{{ 'CLOUD_INSTALL_CANCEL_TITLE' | $$ }}</h1>
-        <p>{{ 'CLOUD_INSTALL_CANCEL_MESSAGE' | $$ }}</p>
+        <h1>{{_computeExpression30()}}</h1>
+        <p>{{_computeExpression31()}}</p>
       </div>
-    </core-overlay>
+    </iron-overlay-behavior>
 
   </template>
-  <script src='cloud-install.js'></script>
-</polymer-element>
+  <script src="cloud-install.js"></script>
+</dom-module>
